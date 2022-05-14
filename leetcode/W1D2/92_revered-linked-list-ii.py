@@ -24,35 +24,35 @@ class Solution:
             answer = answer[:left - 1] + answer[right - 1:left - 2 if left - 2 >= 0 else None:-1] + answer[right:]
             # Slicing 진행
         print(answer)
-        root= temp = ListNode(None)
-
+        answerNode = None
         for i in answer:
-            if root is None:
-                root = ListNode(i,None)
-                continue
-            temp = root
-            while not temp:
-                temp = temp.next
-            temp.next = ListNode(i, None)
-        return root
+            if not answerNode:
+                answerNode = ListNode(i, None)
+            else:
+                temp = answerNode
+                while temp.next:
+                    temp = temp.next
+                temp.next = ListNode(i, None)
+        return answerNode
 
 
 class Solution2:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         # ROOT를 생성하는 방법
-        root = start = ListNode(None)  # root를 생성하는 방법
+        root = start = ListNode(None) # root를 생성하는 방법
         root.next = head
-        for _ in range(right - 1):  # right 직전까지 순회한다
+        for _ in range(right - 1): # right 직전까지 순회한다
             start = start.next
         end = start.next
         temp = end.next
-        for _ in range(right - left):
+        for _ in range(right-left):
             end.next = temp.next
             temp.next = end
             start.next = temp
             temp = end.next
         print(root)
         return root
+
 
 
 # mylist = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5, None)))))
