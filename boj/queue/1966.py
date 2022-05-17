@@ -28,7 +28,6 @@ def go(imparr, t):
             if pop_element.index == t:
                 return str(pop_count)
 
-
 cnt = int(input())
 answer = ""
 for i in range(cnt):
