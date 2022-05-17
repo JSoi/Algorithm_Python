@@ -12,7 +12,7 @@ class ListNode:
 
 
 class Solution:
-    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def reverseList2(self, head: Optional[ListNode]) -> Optional[ListNode]:
         reverse = None
         while head:
             if not reverse:  # None일때
@@ -23,6 +23,15 @@ class Solution:
             head = head.next
             print(reverse)
         return reverse
+
+    def reverseList(self, head):
+        prev = None
+        while head:
+            curr = head
+            head = head.next
+            curr.next = prev
+            prev = curr
+        return prev
 
 
 mylist = ListNode(5, ListNode(4, ListNode(3, ListNode(2, ListNode(1)))))

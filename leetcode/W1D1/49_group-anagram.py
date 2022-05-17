@@ -7,7 +7,7 @@ from typing import List
 def groupAnagrams(strs: List[str]) -> List[List[str]]:
     anagrams = collections.defaultdict(list)
     # 타입을 정의하는 함수!
-    #print(anagrams)
+    # print(anagrams)
     for s in strs:
         # sorted : 파이썬 리스트를 정렬해서 리스트로 반환 -> join 사용 필요
         anagrams[''.join(sorted(s))].append(s)
