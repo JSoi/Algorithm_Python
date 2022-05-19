@@ -2,17 +2,21 @@ def solution(prices):
     answer = [0] * len(prices)
     temp = []
     for i, price in enumerate(prices):
-        if len(temp) ==0:  # 비어있을 떄
-            temp.append(i)
-            continue
-        for i in range(len(temp) - 1, -1, -1):
-            p = temp[i]
-            print(p)
-            if price < prices[p]:
-                answer[p] = i - p
-                del p[i]
-
+        while temp and prices[temp[-1]] > price:
+            tp = temp.pop()
+            answer[tp] = i - tp
+        temp.append(i)
     return answer
 
 
-print(solution(	[1, 2, 3, 2, 3]))
+def solution2(prices):
+    answer = [0] * len(prices)
+    temp = []
+    for i in range(len(prices)):
+        for j in range(i+1, len(prices)):
+            answer[i] += 1
+            if prices[i] > prices[j]:
+                break
+    return answer
+
+print(solution2([1, 2, 3, 2, 3]))
