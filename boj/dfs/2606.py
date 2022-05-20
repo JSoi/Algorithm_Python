@@ -21,4 +21,4 @@ def infect(a):
 
 
 infect(1)
-print(visit.count(True)-1)
+print(visit.count(True) - 1)
