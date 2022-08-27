@@ -2,12 +2,11 @@ import collections
 import sys
 
 n, k = map(int, sys.stdin.readline().rstrip().split())
-virus = visited = list()
+virus = list()
 
 for _ in range(n):
     virus.append(list(map(int, sys.stdin.readline().rstrip().split())))
 
-visited = [[False for _ in range(n)] for _ in range(n)]
 time, s, g = map(int, sys.stdin.readline().rstrip().split())
 ds = [-1, 1, 0, 0]
 dg = [0, 0, -1, 1]
@@ -20,13 +19,14 @@ for i in range(n):
             virusdict[virus[i][j]].append([i, j])
 
 
-def go(sero, garo, virus):
+def go(sero, garo, vstate):
     for j in range(4):
         ns = sero + ds[j]
         ng = garo + dg[j]
-        if ns < 0 or ng < 0 or ns >= n or ng >= n:
+        if ns < 0 or ng < 0 or ns >= n or ng >= n or vstate[ns][ng] != 0:
             continue
-        virus[ns][ng] = virus[sero][garo]
+        vstate[ns][ng] = vstate[sero][garo]
+        virusdict[vstate[ns][ng]].append([ns, ng])
 
 
 # 시간이 우선
@@ -34,10 +34,9 @@ tick = 0
 while tick < time:
     vqueue = list()
     for i in range(1, k + 1):
-        print(i)
         for _ in range(len(virusdict[i])):
             target = virusdict[i].pop(0)
             go(target[0], target[1], virus)
     tick += 1
-print(virus)
+
 print(virus[s - 1][g - 1])
