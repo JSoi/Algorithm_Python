@@ -1,10 +1,15 @@
 def solution(s, n):
     letter = 'abcdefghijklmnopqrstuvwxyz'
+    answer = ''
     for i in range(len(s)):
+        add = ''
         if s[i] != ' ':
             original = s[i]
             if original.isupper():
-                s[i] = letter[(letter.index(s[i].lower()) + n) % len(letter)].upper()
+                add = letter[(letter.index(s[i].lower()) + n) % len(letter)].upper()
             else:
-                s[i] = letter[(letter.index(s[i].lower()) + n) % len(letter)]
-    return s
+                add = letter[(letter.index(s[i].lower()) + n) % len(letter)]
+        else:
+            add = ' '
+        answer += add
+    return answer
