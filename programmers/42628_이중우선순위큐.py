@@ -36,10 +36,4 @@ def solution_heap(operations):
         else:
             # print('삽입')
             heappush(heap, num)
-        print(heap)
-    return [0, 0] if not heap else [heap[-1], heap[0]]
-
-
-# print(solution(["I -45", "I 653", "D 1", "I -642", "I 45", "I 97", "D 1", "D -1", "I 333"]))
-print(solution(["I 1", "I 2", "I 3", "I 4", "D 1","I 5", "I 6", "I 7", "D 1", "D -1"]))
-# print(solution(["I -45", "I 653", "D 1", "I -642", "I 45", "I 97", "D 1", "D -1", "I 333"]))
+    return [0, 0] if not heap else [max(heap), min(heap)]
