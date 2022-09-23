@@ -1,21 +1,22 @@
 import collections
-import copy
+
+answer = 0
 
 
 def solution(info, edges):
+    global answer
     connlist = collections.defaultdict(list)
-    catchlist = [0 for _ in range(len(info) + 1)]
     # 최대 합 dictionary 설정
-    max_catch_dict = collections.defaultdict(list)
-    catchlist[0] = 1
+
+    for a, b in edges:
+        connlist[a].append(b)
 
     # 재귀
-    def rec(pos_list, visit, lamb, wolf, info, connlist, max_catch_dict):
-        max_catch_dict[lamb].append(visit.count(True))
+    def rec(pos_list, visit, lamb, wolf):
+        global answer
+        answer = max(answer, lamb)
         for i in range(len(pos_list)):
             target = pos_list[i]
-            if visit[target]:
-                continue
             nextwolf = wolf + (1 if info[target] == 1 else 0)
             nextlamb = lamb + (1 if info[target] == 0 else 0)
             if nextlamb <= nextwolf:
@@ -26,16 +27,13 @@ def solution(info, edges):
                     if not visit[c]:
                         temppostlist.append(c)
                 visit[target] = True
-                rec(temppostlist, visit, nextlamb, nextwolf, info, connlist, max_catch_dict)
+                rec(temppostlist, visit, nextlamb, nextwolf)
                 visit[target] = False
 
     visit = [False for _ in range(len(info))]
     visit[0] = True
-    for a, b in edges:
-        connlist[a].append(b)
-    # 방문 노드, 방문할 수 있는 노드 리스트, 방문 여부 배열, 양, 늑대, 연결 그래프
-    rec(connlist[0], visit, 1, 0, info, connlist, max_catch_dict)
-    return max(max_catch_dict.keys())
+    rec(connlist[0], visit, 1, 0)
+    return answer
 
 
 print(solution([0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
