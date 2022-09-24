@@ -4,7 +4,7 @@ answer = 0
 
 
 def solution(info, edges):
-    global answer
+    global answer, visit
     connlist = collections.defaultdict(list)
     # 최대 합 dictionary 설정
 
@@ -15,23 +15,22 @@ def solution(info, edges):
     def rec(pos_list, visit, lamb, wolf):
         global answer
         answer = max(answer, lamb)
+
         for i in range(len(pos_list)):
+            # 방문할 수 있는 후보 노드를 모두 순환
             target = pos_list[i]
             nextwolf = wolf + (1 if info[target] == 1 else 0)
             nextlamb = lamb + (1 if info[target] == 0 else 0)
-            if nextlamb <= nextwolf:
+            # 후보 노드를 방문하게 될 시 다음 늑대, 다음 양 개수 저장
+            if nextlamb <= nextwolf:  # 후보 노드 방문 시 늑대 수가 같아지거나 많아지면 진행하지 X
                 continue
-            if not visit[target]:
-                temppostlist = pos_list[::]
-                for c in connlist[target]:
-                    if not visit[c]:
-                        temppostlist.append(c)
-                visit[target] = True
-                rec(temppostlist, visit, nextlamb, nextwolf)
-                visit[target] = False
+            if target not in visit:  # 후보 노드를 방문 하지 않았을 경우
+                visit.append(target)  # 방문하고 - 1
+                rec(pos_list + connlist[target], visit, nextlamb, nextwolf)
+                # 재귀-후보 리스트에 후보 노드 자식노드 더함
+                visit.pop()  # 원상복구 - 2
 
-    visit = [False for _ in range(len(info))]
-    visit[0] = True
+    visit = [0]
     rec(connlist[0], visit, 1, 0)
     return answer
 
