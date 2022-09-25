@@ -23,5 +23,5 @@ def quicksort(array, start, end):
     quicksort(array, right + 1, end)
 
 
-quicksort(array, 0, len(array))
+quicksort(array, 0, len(array) - 1)
 print(array)
