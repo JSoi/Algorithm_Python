@@ -55,3 +55,23 @@ FROM ANIMAL_INS
 ORDER BY ANIMAL_ID;
 
 
+/**
+  https://school.programmers.co.kr/learn/courses/30/lessons/131112
+ */
+SELECT FACTORY_ID, FACTORY_NAME, ADDRESS
+FROM FOOD_FACTORY
+WHERE ADDRESS LIKE '강원도%'
+
+/**
+  경기도에 위치한 식품창고 목록 출력하기
+  https://school.programmers.co.kr/learn/courses/30/lessons/131114
+ */
+
+SELECT WAREHOUSE_ID,
+       WAREHOUSE_NAME,
+       ADDRESS,
+       CASE WHEN FREEZER_YN IS NULL THEN 'N' ELSE FREEZER_YN END
+           AS FREEZER_YN
+FROM FOOD_WAREHOUSE
+WHERE ADDRESS LIKE '경기도%'
+ORDER BY WAREHOUSE_ID ASC
